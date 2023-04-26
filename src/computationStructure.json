@@ -1,0 +1,72 @@
+{
+    "Accountability": {
+        "name": "Accountability",
+        "children": [ "Creation", "Maintenance", "Usage" ]
+    },
+    "Creation": {
+        "name": "Creation",
+        "children": [ "Creation Who", "Creation How", "Creation Where", "Creation When" ]
+    },
+    "Maintenance": {
+        "name": "Maintenance",
+        "children": [ "Maintenance Who", "Maintenance How", "Maintenance Where", "Maintenance When" ]
+    },
+    "Usage": {
+        "name": "Usage",
+        "children": [ "Usage Who", "Usage How", "Usage Where", "Usage When" ]
+    },
+    "Creation When": {
+        "name": "Creation When",
+        "keys": [ "Creation date" ]
+    },
+    "Creation Who": {
+        "name": "Creation Who",
+        "keys": [ "Aggregated creator contributor" ]
+    },
+    "Creation How": {
+        "name": "Creation How",
+        "keys": [ "Creation methodology" ]
+    },
+    "Creation Where": {
+        "name": "Creation Where",
+        "keys": [ "Creation source", "Creation location" ]
+    },
+    "Maintenance When": {
+        "name": "Maintenance When",
+        "keys": [ "Maintenance frequency", "Modification date" ]
+    },
+    "Maintenance Who": {
+        "name": "Maintenance Who",
+        "keys": [ "Aggregated Maintenance contributor" ]
+    },
+    "Maintenance How": {
+        "name": "Maintenance How",
+        "keys": [ "Maintenance methodology" ]
+    },
+    "Maintenance Where": {
+        "name": "Maintenance Where",
+        "keys": [ "Maintenance location" ]
+    },
+    "Usage How": {
+        "name": "Usage How",
+        "keys": [ "Usage license", "Usage requirements", "Usage reuse",  "Aggregated Usage access" ]
+    },
+    "Usage What": {
+        "name": "Usage What",
+        "keys": [ "Usage concepts covered", "Usage dataset description", "Usage dataset entities", "Usage examples", "Usage dataset quality", "Usage RDF serialization", "Usage dataset triples" ]
+    },
+    "Usage When": {
+        "name": "Usage When",
+        "keys": [ "Usage End availability", "Usage End validity", "Usage start availability" ]
+    },
+    "Usage Where": {
+        "name": "Usage Where",
+        "keys": [ "Usage location", "Usage access address", "Usage dataset webpage" ]
+    },
+    "Usage Who": {
+        "name": "Usage Who",
+        "keys": [ "Usage audience", "Usage Dataset publisher", "Usage rights" ]
+    }
+}
+
+
