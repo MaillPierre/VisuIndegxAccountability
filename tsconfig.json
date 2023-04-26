@@ -1,0 +1,15 @@
+{
+    "source": "src/js//index.ts",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "compilerOptions": {
+        "allowJs": true,
+        "sourceMap": true,
+        "target": "ES2021",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+}
