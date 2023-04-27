@@ -3,7 +3,7 @@
     "source": "src/index.html",
     "scripts": {
         "prebuild": "rm dist/* ./*.js ./*.js.map ./*.css.map ./*.css || true",
-        "build": "npx parcel build",
+        "build": "npx parcel build src/index.html",
         "deploy": "npm run build",
         "postdeploy": "sed 's/\\/index\\./\\.\\/index\\./g' dist/index.html > index.html && rm dist/index.html || true && mv dist/* .",
         "dev": "npx parcel serve --https",
@@ -19,7 +19,8 @@
         "csv-parse": "^5.3.8",
         "datatables.net-bs": "^1.13.4",
         "jquery": "^3.6.4",
-        "node-fetch": "^3.3.1"
+        "node-fetch": "^3.3.1",
+        "parcel": "^2.8.3"
     },
     "devDependencies": {
         "assert": "^2.0.0",
