@@ -4,67 +4,204 @@
         "children": [ "Creation", "Maintenance", "Usage" ]
     },
     "Creation": {
+        "weightKey": "collectionW",
         "name": "Creation",
         "children": [ "Creation Who", "Creation How", "Creation Where", "Creation When" ]
     },
     "Maintenance": {
+        "weightKey": "maintenanceW",
         "name": "Maintenance",
         "children": [ "Maintenance Who", "Maintenance How", "Maintenance Where", "Maintenance When" ]
     },
     "Usage": {
+        "weightKey": "usageW",
         "name": "Usage",
         "children": [ "Usage Who", "Usage How", "Usage Where", "Usage When" ]
     },
     "Creation When": {
+        "weightKey": "creationWhenW",
         "name": "Creation When",
         "keys": [ "Creation date" ]
     },
     "Creation Who": {
+        "weightKey": "creationWhoW",
         "name": "Creation Who",
         "keys": [ "Aggregated creator contributor" ]
     },
     "Creation How": {
+        "weightKey": "creationHowW",
         "name": "Creation How",
         "keys": [ "Creation methodology" ]
     },
     "Creation Where": {
+        "weightKey": "creationWhereW",
         "name": "Creation Where",
         "keys": [ "Creation source", "Creation location" ]
     },
     "Maintenance When": {
+        "weightKey": "maintenanceWhenW",
         "name": "Maintenance When",
         "keys": [ "Maintenance frequency", "Modification date" ]
     },
     "Maintenance Who": {
+        "weightKey": "maintenanceWhoW",
         "name": "Maintenance Who",
         "keys": [ "Aggregated Maintenance contributor" ]
     },
     "Maintenance How": {
+        "weightKey": "maintenanceHowW",
         "name": "Maintenance How",
         "keys": [ "Maintenance methodology" ]
     },
     "Maintenance Where": {
+        "weightKey": "maintenanceWhereW",
         "name": "Maintenance Where",
         "keys": [ "Maintenance location" ]
     },
     "Usage How": {
+        "weightKey": "usageHowW",
         "name": "Usage How",
         "keys": [ "Usage license", "Usage requirements", "Usage reuse",  "Aggregated Usage access" ]
     },
     "Usage What": {
+        "weightKey": "usageWhatW",
         "name": "Usage What",
         "keys": [ "Usage concepts covered", "Usage dataset description", "Usage dataset entities", "Usage examples", "Usage dataset quality", "Usage RDF serialization", "Usage dataset triples" ]
     },
     "Usage When": {
+        "weightKey": "usageWhenW",
         "name": "Usage When",
         "keys": [ "Usage End availability", "Usage End validity", "Usage start availability" ]
     },
     "Usage Where": {
+        "weightKey": "usageWhereW",
         "name": "Usage Where",
         "keys": [ "Usage location", "Usage access address", "Usage dataset webpage" ]
     },
     "Usage Who": {
+        "weightKey": "usageWhoW",
         "name": "Usage Who",
         "keys": [ "Usage audience", "Usage Dataset publisher", "Usage rights" ]
+    },
+    "Creation date": {
+        "weightKey": "creationDateW",
+        "name": "Creation date"
+    },
+    "Aggregated creator contributor": {
+        "weightKey": "aggregatedCreatorContributorW",
+        "name": "Aggregated creator contributor"
+    },
+    "Creation methodology": {
+        "weightKey": "creationMethodologyW",
+        "name": "Creation methodology"
+    },
+    "Creation source": {
+        "weightKey": "creationSourceW",
+        "name": "Creation source"
+    },
+    "Creation location": {
+        "weightKey": "creationLocationW",
+        "name": "Creation location"
+    },
+    "Maintenance frequency": {
+        "weightKey": "maintenanceFrequencyW",
+        "name": "Maintenance frequency"
+    },
+    "Modification date": {
+        "weightKey": "modificationDateW",
+        "name": "Modification date"
+    },
+    "Aggregated Maintenance contributor": {
+        "weightKey": "aggregatedMaintenanceContributorW",
+        "name": "Aggregated Maintenance contributor"
+    },
+    "Maintenance methodology": {
+        "weightKey": "maintenanceMethodologyW",
+        "name": "Maintenance methodology"
+    },
+    "Maintenance location": {
+        "weightKey": "maintenanceLocationW",
+        "name": "Maintenance location"
+    },
+    "Usage license": {
+        "weightKey": "usageLicenseW",
+        "name": "Usage license"
+    },
+    "Usage requirements": {
+        "weightKey": "usageRequirementsW",
+        "name": "Usage requirements"
+    },
+    "Usage reuse": {
+        "weightKey": "usageReuseW",
+        "name": "Usage reuse"
+    },
+    "Aggregated Usage access": {
+        "weightKey": "aggregatedUsageAccessW",
+        "name": "Aggregated Usage access"
+    },
+    "Usage concepts covered": {
+        "weightKey": "usageConceptsCoveredW",
+        "name": "Usage concepts covered"
+    },
+    "Usage dataset description": {
+        "weightKey": "usageDatasetDescriptionW",
+        "name": "Usage dataset description"
+    },
+    "Usage dataset entities": {
+        "weightKey": "usageDatasetEntitiesW",
+        "name": "Usage dataset entities"
+    },
+    "Usage examples": {
+        "weightKey": "usageExamplesW",
+        "name": "Usage examples"
+    },
+    "Usage dataset quality": {
+        "weightKey": "usageDatasetQualityW",
+        "name": "Usage dataset quality"
+    },
+    "Usage RDF serialization": {
+        "weightKey": "usageRDFSerializationW",
+        "name": "Usage RDF serialization"
+    },
+    "Usage dataset triples": {
+        "weightKey": "usageDatasetTriplesW",
+        "name": "Usage dataset triples"
+    },
+    "Usage End availability": {
+        "weightKey": "usageEndAvailabilityW",
+        "name": "Usage End availability"
+    },
+    "Usage End validity": {
+        "weightKey": "usageEndValidityW",
+        "name": "Usage End validity"
+    },
+    "Usage start availability": {
+        "weightKey": "usageStartAvailabilityW",
+        "name": "Usage start availability"
+    },
+    "Usage location": {
+        "weightKey": "usageLocationW",
+        "name": "Usage location"
+    },
+    "Usage access address": {
+        "weightKey": "usageAccessAddressW",
+        "name": "Usage access address"
+    },
+    "Usage dataset webpage": {
+        "weightKey": "usageDatasetWebpageW",
+        "name": "Usage dataset webpage"
+    },
+    "Usage audience": {
+        "weightKey": "usageAudienceW",
+        "name": "Usage audience"
+    },
+    "Usage Dataset publisher": {
+        "weightKey": "usageDatasetPublisherW",
+        "name": "Usage Dataset publisher"
+    },
+    "Usage rights": {
+        "weightKey": "usageRightsW",
+        "name": "Usage rights"
     }
+
 }
