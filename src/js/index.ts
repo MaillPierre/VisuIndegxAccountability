@@ -57,6 +57,27 @@ $(() => {
       columns: true
     });
     let currentProfile = profiles[0];
+    $("#standardProfileButton").on("click", () => {
+      if(profiles.find(profile => profile.name === "Standard") !== undefined) {
+        currentProfile = profiles.find(profile => profile.name === "Standard");
+        refreshEvalData();
+        refreshWeights();
+      }
+    });
+    $("#trustProfileButton").on("click", () => {
+      if(profiles.find(profile => profile.name === "Trust") !== undefined) {
+        currentProfile = profiles.find(profile => profile.name === "Trust");
+        refreshEvalData();
+        refreshWeights();
+      }
+    });
+    $("#mostCommonProfileButton").on("click", () => {
+      if(profiles.find(profile => profile.name === "Frequency") !== undefined) {
+        currentProfile = profiles.find(profile => profile.name === "Frequency");
+        refreshEvalData();
+        refreshWeights();
+      }
+    });
 
     // Generate the raw datatable
     let rawDataTable = $(rawResultTableId).DataTable({
@@ -89,6 +110,7 @@ $(() => {
       let result = new Map<string, number>();
       if (rules[feature] !== undefined) {
         let featureScores: number[] = [];
+        let weights: number[] = [];
         // For each child, evaluate it and add it to the result
         // Childs are nodes that are not leafs from the computation structure
         if (rules[feature].children !== undefined) {
@@ -104,6 +126,7 @@ $(() => {
             }
             const childScore = rawChildScore * childWeight;
             result.set(child, childScore);
+            weights.push(childWeight);
             featureScores.push(childScore);
           });
         }
@@ -114,16 +137,20 @@ $(() => {
             data.filter(dataRow => dataRow.Dataset === dataset).forEach((dataRow) => {
               const rawLeafValue = Number.parseFloat(dataRow[key]);
               let leafValue = rawLeafValue;
+              let leafWeight = 1;
               if (profile[feature] !== undefined && profile[feature].keys !== undefined && profile[feature].keys.findLast(filterKey => filterKey.name === key) !== undefined && profile[feature].keys.findLast(filterKey => filterKey.name === key).weight !== undefined) {
-                let leafWeight = profile[feature].keys.findLast(filterKey => filterKey.name === key).weight;
-                leafValue = rawLeafValue * leafWeight;
+                leafWeight = profile[feature].keys.findLast(filterKey => filterKey.name === key).weight;
               }
-              result.set(key, rawLeafValue);
-              featureScores.push(Number.parseFloat(dataRow[key]));
+              leafValue = rawLeafValue * leafWeight;
+              result.set(key, leafValue);
+              weights.push(leafWeight);
+              featureScores.push(leafValue);
             });
           });
         }
-        let featureScore = featureScores.reduce((a, b) => a + b, 0) / featureScores.length;
+        // Compute the feature score
+        let sumWeights = weights.reduce((a, b) => a + b, 0);
+        let featureScore = featureScores.reduce((a, b) => a + b, 0) / sumWeights;
         result.set(feature, featureScore);
         return result;
       } else {
@@ -131,19 +158,34 @@ $(() => {
       }
     }
 
+    function refreshEvalData() {
+      evalDataTable.clear()
+      evalDataTable.rows.add(generateEvalData(data))
+      evalDataTable.draw()
+    }
+
+    function refreshWeights() {
+      Object.keys(currentProfile).forEach(feature => {
+        if (currentProfile[feature].children !== undefined) {
+          currentProfile[feature].children.forEach(child => {
+            const childKey = currentProfile[child.name].key;
+            $(`#${childKey}`).val(child.weight);
+          });
+        }
+      });
+    }
+
     // Connecting the form to the evaluation display
     // init with current profile
+    refreshWeights();
     Object.keys(currentProfile).forEach(feature => {
       if (currentProfile[feature].children !== undefined) {
         currentProfile[feature].children.forEach(child => {
           const childKey = currentProfile[child.name].key;
-          $(`#${childKey}`).val(child.weight);
           // on change, update the profile and the evaluation
           $(`#${childKey}`).on('change', () => {
             child.weight = Number.parseFloat($(`#${childKey}`).val() as string);
-            evalDataTable.clear()
-            evalDataTable.rows.add(generateEvalData(data))
-            evalDataTable.draw()
+            refreshEvalData()
           })
         });
       }
