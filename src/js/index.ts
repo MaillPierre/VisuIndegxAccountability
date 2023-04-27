@@ -106,6 +106,7 @@ $(() => {
     });
 
     // Generate the evaluation of a feature from the data, the computation structure and the current profile
+    // Returns a map of the feature and its children associated with their score
     function evalDataset(dataset: string, feature: string = "Accountability", profile = currentProfile): Map<string, number> {
       let result = new Map<string, number>();
       if (rules[feature] !== undefined) {
@@ -116,15 +117,20 @@ $(() => {
         if (rules[feature].children !== undefined) {
           rules[feature].children.forEach((child: string) => {
             let childEval = evalDataset(dataset, child, profile);
+            // We add the other scores to the result, they are the results of other sub-child computations
             childEval.forEach((value, key) => {
               result.set(key, value);
             });
+            // We get the result of the child computation
             const rawChildScore = childEval.get(child);
+            // We get the weight of the child in the profile
             let childWeight = 1;
             if (profile[feature] !== undefined && profile[feature].children !== undefined && profile[feature].children.findLast(filterChild => filterChild.name === child) !== undefined && profile[feature].children.findLast(filterChild => filterChild.name === child).weight !== undefined) {
               childWeight = profile[feature].children.findLast(filterChild => filterChild.name === child).weight;
             }
+            // We multiply the result by its weight for the computation of the feature score
             const childScore = rawChildScore * childWeight;
+            // We add the weight and the score to the arrays for the computation of the feature score
             result.set(child, childScore);
             weights.push(childWeight);
             featureScores.push(childScore);
@@ -135,13 +141,17 @@ $(() => {
         if (rules[feature].keys !== undefined) {
           rules[feature].keys.forEach((key) => {
             data.filter(dataRow => dataRow.Dataset === dataset).forEach((dataRow) => {
+              // We get the value of the leaf measure in the data
               const rawLeafValue = Number.parseFloat(dataRow[key]);
               let leafValue = rawLeafValue;
+              // We get the weight of the leaf measure in the profile
               let leafWeight = 1;
               if (profile[feature] !== undefined && profile[feature].keys !== undefined && profile[feature].keys.findLast(filterKey => filterKey.name === key) !== undefined && profile[feature].keys.findLast(filterKey => filterKey.name === key).weight !== undefined) {
                 leafWeight = profile[feature].keys.findLast(filterKey => filterKey.name === key).weight;
               }
+              // We multiply the value by its weight for the computation of the feature score
               leafValue = rawLeafValue * leafWeight;
+              // We add the weight and the value to the arrays for the computation of the feature score
               result.set(key, leafValue);
               weights.push(leafWeight);
               featureScores.push(leafValue);
@@ -149,8 +159,10 @@ $(() => {
           });
         }
         // Compute the feature score
+        // We sum the weights and the scores and divide the sum of the scores by the sum of the weights
         let sumWeights = weights.reduce((a, b) => a + b, 0);
         let featureScore = featureScores.reduce((a, b) => a + b, 0) / sumWeights;
+        // We add the feature and its score to the result
         result.set(feature, featureScore);
         return result;
       } else {

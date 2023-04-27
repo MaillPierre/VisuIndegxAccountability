@@ -28,3 +28,9 @@ export function xhrGetPromise(url): Promise<string> {
         xhr.send();
     });
 }
+
+
+// Set the precision of a float
+export function precise(x, n = 2) {
+    return Number.parseFloat(x).toPrecision(n);
+}
