@@ -204,6 +204,16 @@ $(() => {
               $(`#${childKey}`).val(child.weight);
             });
           }
+          if (currentProfile[feature].keys !== undefined) {
+            currentProfile[feature].keys.forEach(child => {
+              if(rules[child.name] !== undefined) {
+                const childKey = rules[child.name].weightKey;
+                $(`#${childKey}`).val(child.weight);
+              } else {
+                console.log(`No child ${child.name} found in profile`)
+              }
+            });
+          }
         });
       }
 
