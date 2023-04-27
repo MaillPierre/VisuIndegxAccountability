@@ -72,23 +72,17 @@ $(() => {
 
     console.log('evalData: ', evalData)
     let evalDataTable = $(evalResultTableId).dataTable({
+      responsive: true,
       data: evalData,
       columns: [{ "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName } }))
     });
 
     let rawDataTable = $(rawResultTableId).dataTable({
+      responsive: true,
       data: data,
       columns: columns.map(columnName => { return { "data": columnName } })
     });
 
-    // let datasetEvals = new Map();
-    // data.forEach((dataRow, index) => {
-    //   const dataset = dataRow.Dataset;
-    //   let datasetEval = evalDataset(dataset);
-    //   datasetEvals.set(dataset, datasetEval);
-    // });
-    // console.log('datasetEvals: ', datasetEvals);
-    // console.log('Eval Caligraph: ', datasetEvals.get("http://caligraph.org/.well-known/void").get("Accountability"));
 
     function evalDataset(dataset: string, feature: string = "Accountability"): Map<string, number> {
       let result = new Map<string, number>();

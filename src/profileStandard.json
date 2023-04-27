@@ -1,0 +1,254 @@
+[
+    {
+        "name": "Standard",
+        "Accountability": {
+            "children": [
+                {
+                    "name": "Creation",
+                    "weight": 1
+                },
+                {
+                    "name": "Maintenance",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage",
+                    "weight": 1
+                }
+            ],
+            "weight": 1
+        },
+        "Creation": {
+            "children": [
+                {
+                    "name": "Creation Who",
+                    "weight": 1
+                },
+                {
+                    "name": "Creation How",
+                    "weight": 1
+                },
+                {
+                    "name": "Creation Where",
+                    "weight": 1
+                },
+                {
+                    "name": "Creation When",
+                    "weight": 1
+                }
+            ]
+        },
+        "Maintenance": {
+            "children": [
+                {
+                    "name": "Maintenance Who",
+                    "weight": 1
+                },
+                {
+                    "name": "Maintenance How",
+                    "weight": 1
+                },
+                {
+                    "name": "Maintenance Where",
+                    "weight": 1
+                },
+                {
+                    "name": "Maintenance When",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage": {
+            "children": [
+                {
+                    "name": "Usage Who",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage How",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage Where",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage When",
+                    "weight": 1
+                }
+            ]
+        },
+        "Creation When": {
+            "keys": [
+                {
+                    "name": "Creation date",
+                    "weight": 1
+                }
+            ]
+        },
+        "Creation Who": {
+            "keys": [
+                {
+                    "name": "Aggregated creator contributor",
+                    "weight": 1
+                }
+            ]
+        },
+        "Creation How": {
+            "keys": [
+                {
+                    "name": "Creation methodology",
+                    "weight": 1
+                }
+            ]
+        },
+        "Creation Where": {
+            "keys": [
+                {
+                    "name": "Creation source",
+                    "weight": 1
+                },
+                {
+                    "name": "Creation location",
+                    "weight": 1
+                }
+            ]
+        },
+        "Maintenance When": {
+            "keys": [
+                {
+                    "name": "Maintenance frequency",
+                    "weight": 1
+                },
+                {
+                    "name": "Modification date",
+                    "weight": 1
+                }
+            ]
+        },
+        "Maintenance Who": {
+            "keys": [
+                {
+                    "name": "Aggregated Maintenance contributor",
+                    "weight": 1
+                }
+            ]
+        },
+        "Maintenance How": {
+            "keys": [
+                {
+                    "name": "Maintenance methodology",
+                    "weight": 1
+                }
+            ]
+        },
+        "Maintenance Where": {
+            "keys": [
+                {
+                    "name": "Maintenance location",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage How": {
+            "keys": [
+                {
+                    "name": "Usage license",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage requirements",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage reuse",
+                    "weight": 1
+                },
+                {
+                    "name": "Aggregated Usage access",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage What": {
+            "keys": [
+                {
+                    "name": "Usage concepts covered",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage dataset description",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage dataset entities",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage examples",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage dataset quality",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage RDF serialization",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage dataset triples",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage When": {
+            "keys": [
+                {
+                    "name": "Usage End availability",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage End validity",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage start availability",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage Where": {
+            "keys": [
+                {
+                    "name": "Usage location",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage access address",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage dataset webpage",
+                    "weight": 1
+                }
+            ]
+        },
+        "Usage Who": {
+            "keys": [
+                {
+                    "name": "Usage audience",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage Dataset publisher",
+                    "weight": 1
+                },
+                {
+                    "name": "Usage rights",
+                    "weight": 1
+                }
+            ]
+        }
+    }
+]
