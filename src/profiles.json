@@ -77,6 +77,10 @@
                 {
                     "name": "Usage When",
                     "weight": 1
+                },
+                {
+                    "name": "Usage What",
+                    "weight": 1
                 }
             ]
         },
