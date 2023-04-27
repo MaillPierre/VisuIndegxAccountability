@@ -5,11 +5,12 @@ import * as Utils from './Utils';
 import * as rules from '../computationStructure.json'
 import * as profiles from '../profiles.json'
 
-const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/results/measures_26042023.csv";
+const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/results/Measures-24-04-2023.csv";
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
 const rawResultTableId = "#rawResults";
 const evalResultTableId = "#evalResults";
 const columns = [
+  "Endpoint",
   "Dataset",
   "Creation date",
   "Creation location",
@@ -56,7 +57,7 @@ $(() => {
       delimiter: ',',
       skip_empty_lines: true,
       columns: true
-    });
+    }).filter(dataRow => dataRow.Endpoint !== "");
     Utils.xhrGetPromise(commentFilename).then((csvCommentContent) => {
       const commentData: any[] = parse(csvCommentContent, {
         delimiter: ';',
@@ -105,9 +106,11 @@ $(() => {
       // Generate the evaluation table data
       function generateEvalData(data: any[]) {
         const evalData = data.map(dataRow => {
+          console.log(dataRow)
           let dataset = dataRow.Dataset;
+          let endpoint = dataRow.Endpoint;
           let datasetEval = evalDataset(dataset);
-          let result = { "Dataset": dataset };
+          let result = { "Endpoint":endpoint, "Dataset": dataset };
           measures.forEach(measureName => {
             result[measureName] = Utils.precise(datasetEval.get(measureName));
           })
@@ -119,7 +122,7 @@ $(() => {
       // Generate the evaluated datatable
       let evalDataTable = $(evalResultTableId).DataTable({
         data: generateEvalData(data),
-        columns: [{ "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName ,"ariaTitle": findComment(columnName) } }))
+        columns: [{ "data": "Endpoint" },{ "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName ,"ariaTitle": findComment(columnName) } }))
       });
 
       // Generate the evaluation of a feature from the data, the computation structure and the current profile
