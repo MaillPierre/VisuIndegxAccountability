@@ -92,7 +92,7 @@ $(() => {
         let datasetEval = evalDataset(dataset);
         let result = { "Dataset": dataset };
         measures.forEach(measureName => {
-          result[measureName] = datasetEval.get(measureName);
+          result[measureName] = Utils.precise(datasetEval.get(measureName));
         })
         return result;
       });
