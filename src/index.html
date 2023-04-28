@@ -15,8 +15,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/treeflex/dist/css/treeflex.css">
     <script type="module" src="./js/index.ts"></script>
 
@@ -110,35 +108,14 @@
 
 
                     <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-sm" id="evalResults">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Endpoint</th>
-                                        <th scope="col">Dataset</th>
-                                        <th scope="col">Accountability</th>
-                                        <th scope="col">Creation</th>
-                                        <th scope="col">Maintenance</th>
-                                        <th scope="col">Usage</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                        <div class="col-12" id="evalResultsWrapper">
+
                         </div>
                     </div>
 
-                    <div class="row" style="width: 100%; white-space: nowrap;">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-sm" id="rawResults">
-                                <thead>
-                                    <tr id="rawResultHearderRow">
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                    <div class="row">
+                        <div class="col-12" id="rawResultsWrapper">
+                            
                         </div>
                     </div>
                 </div>
