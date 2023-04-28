@@ -4,6 +4,7 @@ import 'datatables.net-bs';
 import * as Utils from './Utils';
 import * as rules from '../computationStructure.json'
 import * as profiles from '../profiles.json'
+import * as echarts from 'echarts';
 
 const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/results/Measures-24-04-2023.csv";
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
@@ -115,11 +116,57 @@ $(() => {
         return evalData;
       };
 
+      let evalData = generateEvalData(data);
       // Generate the evaluated datatable
       let evalDataTable = $(evalResultTableId).DataTable({
-        data: generateEvalData(data),
+        data: evalData,
         columns: [{ "data": "Endpoint" }, { "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } }))
       });
+
+      // Generate the evaluation visualization
+      var chartDom = document.getElementById('evalVisu');
+      chartDom.style.height = "500px";
+      chartDom.style.width = $("#mainContentCol").width() + "px";
+      var myChart = echarts.init(chartDom);
+      var option;
+      option = {
+        title: {
+          top: 'top',
+          left: 'center',
+          show: true,
+          text: 'Evaluation of the accountability of the datasets',
+        },
+        parallelAxis: [
+          { dim: 1, name: 'Creation' },
+          { dim: 2, name: 'Maintenance' },
+          { dim: 3, name: 'Usage' },
+        ],
+        series: [
+          {
+            type: 'parallel',
+            lineStyle: {
+              width: 4
+            },
+            axisPointer: {
+              type: 'line',
+              label: {
+                show: true,
+                formatter: function (params) {
+                  return params.value;
+                }
+              }
+            },
+            tooltip: {
+              show: true,
+              trigger: 'item'
+            },
+            data: evalData.map(dataRow => {
+              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage];
+            })
+          }
+        ]
+      };
+      option && myChart.setOption(option);
 
       // Generate the evaluation of a feature from the data, the computation structure and the current profile
       // Returns a map of the feature and its children associated with their score
@@ -227,12 +274,12 @@ $(() => {
           const featureComment = findComment(feature);
           let result = $("<li />");
           result.attr("title", featureComment);
-          if(featureId === undefined) {
+          if (featureId === undefined) {
             result.append(`<span class="tf-nc">${featureName} </span>`)
           } else {
             result.append(`<span class="tf-nc"><label for="${featureId}"> ${featureName} </label> <input id="${featureId}" type="text" name="${featureId}" /></span>`)
           }
-          if(rules[feature].keys !== undefined || rules[feature].children !== undefined) {
+          if (rules[feature].keys !== undefined || rules[feature].children !== undefined) {
             let chidrenList = $(`<ul></ul>`);
             if (rules[feature].children !== undefined) {
               rules[feature].children.forEach(child => {
