@@ -116,63 +116,65 @@ $(() => {
         return evalData;
       };
 
-      let evalData = generateEvalData(data);
       // Generate the evaluated datatable
       let evalDataTable = $(evalResultTableId).DataTable({
-        data: evalData,
+        data: generateEvalData(data),
         columns: [{ "data": "Endpoint" }, { "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } }))
       });
 
       // Generate the evaluation visualization
-      var chartDom = document.getElementById('evalVisu');
+      let chartDom = document.getElementById('evalVisu');
       chartDom.style.height = "800px";
       chartDom.style.width = $("#mainContentCol").width() + "px";
+      let myChart = echarts.init(chartDom);
+      let option = generateParallelLinesOptions();
+      myChart.setOption(option);
       // Generating the chart series
-      let endpointList = [...new Set(evalData.map(dataRow => dataRow.Endpoint))];
-      let chartSeries = endpointList.map(endpoint => {
-        return {
-          name: endpoint,
-          type: 'parallel',
-          lineStyle: {
-            width: 4
+      function generateParallelLinesOptions() {
+        let evalData = generateEvalData(data);
+        let endpointList = [...new Set(evalData.map(dataRow => dataRow.Endpoint))];
+        let chartSeries = endpointList.map(endpoint => {
+          return {
+            name: endpoint,
+            type: 'parallel',
+            lineStyle: {
+              width: 4
+            },
+            tooltip: {
+              show: true
+            },
+            data: evalData.filter(dataRow => dataRow.Endpoint === endpoint).map(dataRow => {
+              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage]
+            })
+          }
+        });
+        return  {
+          title: {
+            top: 'top',
+            left: 'center',
+            show: true,
+            text: 'Evaluation of the accountability of the datasets',
           },
-          tooltip: {
-            show: true
-          },
-          data: evalData.filter(dataRow => dataRow.Endpoint === endpoint).map(dataRow => {
-            return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage]
-          })
-        }
-      });
-      var myChart = echarts.init(chartDom);
-      var option;
-      option = {
-        title: {
-          top: 'top',
-          left: 'center',
-          show: true,
-          text: 'Evaluation of the accountability of the datasets',
-        },
-        parallelAxis: [
-          { 
-            dim: 1, 
-            name: 'Creation',
-            max: 1
-          },
-          { 
-            dim: 2, 
-            name: 'Maintenance',
-            max: 1
-          },
-          { 
-            dim: 3, 
-            name: 'Usage',
-            max: 1
-          },
-        ],
-        series: chartSeries
-      };
-      option && myChart.setOption(option);
+          parallelAxis: [
+            { 
+              dim: 1, 
+              name: 'Creation',
+              max: 1
+            },
+            { 
+              dim: 2, 
+              name: 'Maintenance',
+              max: 1
+            },
+            { 
+              dim: 3, 
+              name: 'Usage',
+              max: 1
+            },
+          ],
+          series: chartSeries
+        };
+      }
 
       // Generate the evaluation of a feature from the data, the computation structure and the current profile
       // Returns a map of the feature and its children associated with their score
@@ -241,6 +243,7 @@ $(() => {
         evalDataTable.clear()
         evalDataTable.rows.add(generateEvalData(data))
         evalDataTable.draw()
+        myChart.setOption(generateParallelLinesOptions(), true);
       }
 
       function refreshWeights() {
