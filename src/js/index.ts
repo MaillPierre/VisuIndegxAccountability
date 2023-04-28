@@ -10,39 +10,6 @@ const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountab
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
 const rawResultTableId = "#rawResults";
 const evalResultTableId = "#evalResults";
-// const columns = [
-//   "Endpoint",
-//   "Dataset",
-//   "Creation date",
-//   "Creation location",
-//   "Creation methodology",
-//   "Creation source",
-//   "Aggregated creator contributor",
-//   "Maintenance frequency",
-//   "Maintenance location",
-//   "Maintenance methodology",
-//   "Modification date",
-//   "Aggregated Maintenance contributor",
-//   "Aggregated Usage access",
-//   "Usage license",
-//   "Usage requirements",
-//   "Usage reuse",
-//   "Usage concepts covered",
-//   "Usage dataset description",
-//   "Usage dataset entities",
-//   "Usage dataset quality",
-//   "Usage RDF serialization",
-//   "Usage dataset triples",
-//   "Usage End availability",
-//   "Usage End validity",
-//   "Usage start availability",
-//   "Usage access address",
-//   "Usage location",
-//   "Usage dataset webpage",
-//   "Usage audience",
-//   "Usage Dataset publisher",
-//   "Usage rights"
-// ];
 const measures = [
   "Accountability",
   "Creation",
@@ -148,7 +115,7 @@ $(() => {
               show: true
             },
             data: evalData.filter(dataRow => dataRow.Endpoint === endpoint).map(dataRow => {
-              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage]
+              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage, dataRow.Dataset]
             })
           }
         });
@@ -161,21 +128,27 @@ $(() => {
           },
           parallelAxis: [
             { 
-              dim: 1, 
+              dim: 0, 
               name: 'Creation',
               max: 1
             },
             { 
-              dim: 2, 
+              dim: 1, 
               name: 'Maintenance',
               max: 1
             },
             { 
-              dim: 3, 
+              dim: 2, 
               name: 'Usage',
               max: 1
             },
           ],
+          tooltip: {
+            showDelay: 0,
+            formatter: function (params) {
+                return `${params.seriesName} <br/> ${params.value[3]} <br/> Creation: ${params.value[0]} <br/> Maintenance: ${params.value[1]} <br/> Usage: ${params.value[2]}`;
+            },
+        },
           series: chartSeries
         };
       }
