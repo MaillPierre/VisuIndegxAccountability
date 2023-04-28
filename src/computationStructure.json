@@ -16,7 +16,7 @@
     "Usage": {
         "weightKey": "usageW",
         "name": "Usage",
-        "children": [ "Usage Who", "Usage How", "Usage Where", "Usage When" ]
+        "children": [ "Usage Who", "Usage How", "Usage Where", "Usage When", "Usage What" ]
     },
     "Creation When": {
         "weightKey": "creationWhenW",
