@@ -93,24 +93,23 @@ $(() => {
         data: data,
         columns: columns.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } })
       });
-      
+
       function findComment(measureName) {
         let resultFind = commentData.filter((commentRow) => commentRow.Measure === measureName)[0];
         let result = resultFind !== undefined ? resultFind.Advice : measureName;
         if (resultFind === undefined) {
           console.log("No comment found for measure " + measureName);
-        } 
+        }
         return result;
       }
 
       // Generate the evaluation table data
       function generateEvalData(data: any[]) {
         const evalData = data.map(dataRow => {
-          console.log(dataRow)
           let dataset = dataRow.Dataset;
           let endpoint = dataRow.Endpoint;
           let datasetEval = evalDataset(dataset);
-          let result = { "Endpoint":endpoint, "Dataset": dataset };
+          let result = { "Endpoint": endpoint, "Dataset": dataset };
           measures.forEach(measureName => {
             result[measureName] = Utils.precise(datasetEval.get(measureName));
           })
@@ -122,7 +121,7 @@ $(() => {
       // Generate the evaluated datatable
       let evalDataTable = $(evalResultTableId).DataTable({
         data: generateEvalData(data),
-        columns: [{ "data": "Endpoint" },{ "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName ,"ariaTitle": findComment(columnName) } }))
+        columns: [{ "data": "Endpoint" }, { "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } }))
       });
 
       // Generate the evaluation of a feature from the data, the computation structure and the current profile
@@ -206,7 +205,7 @@ $(() => {
           }
           if (currentProfile[feature].keys !== undefined) {
             currentProfile[feature].keys.forEach(child => {
-              if(rules[child.name] !== undefined) {
+              if (rules[child.name] !== undefined) {
                 const childKey = rules[child.name].weightKey;
                 $(`#${childKey}`).val(child.weight);
               } else {
@@ -223,7 +222,17 @@ $(() => {
       Object.keys(currentProfile).forEach(feature => {
         if (currentProfile[feature].children !== undefined) {
           currentProfile[feature].children.forEach(child => {
-            const childKey = currentProfile[child.name].key;
+            const childKey = rules[child.name].weightKey;
+            // on change, update the profile and the evaluation
+            $(`#${childKey}`).on('change', () => {
+              child.weight = Number.parseFloat($(`#${childKey}`).val() as string);
+              refreshEvalData()
+            })
+          });
+        }
+        if (currentProfile[feature].keys !== undefined) {
+          currentProfile[feature].keys.forEach(child => {
+            const childKey = rules[child.name].weightKey;
             // on change, update the profile and the evaluation
             $(`#${childKey}`).on('change', () => {
               child.weight = Number.parseFloat($(`#${childKey}`).val() as string);
