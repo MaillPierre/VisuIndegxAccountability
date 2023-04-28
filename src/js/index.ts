@@ -94,12 +94,9 @@ $(() => {
         columns: columns.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } })
       });
 
-      function findComment(measureName) {
+      function findComment(measureName: string): string {
         let resultFind = commentData.filter((commentRow) => commentRow.Measure === measureName)[0];
         let result = resultFind !== undefined ? resultFind.Advice : measureName;
-        if (resultFind === undefined) {
-          console.log("No comment found for measure " + measureName);
-        }
         return result;
       }
 
@@ -209,12 +206,55 @@ $(() => {
                 const childKey = rules[child.name].weightKey;
                 $(`#${childKey}`).val(child.weight);
               } else {
-                console.log(`No child ${child.name} found in profile`)
+                console.log(`No weight ${child.name} found in profile`)
               }
             });
           }
         });
       }
+
+      let creationList = $("<ul></ul>");
+      creationList.append(generateFeatureWeightListView("Creation"));
+      $("#creationListRow").append(creationList);
+      let maintenanceList = $("<ul></ul>");
+      maintenanceList.append(generateFeatureWeightListView("Maintenance"));
+      $("#maintenanceListRow").append(maintenanceList);
+      let usageList = $("<ul></ul>");
+      usageList.append(generateFeatureWeightListView("Usage"));
+      $("#usageListRow").append(usageList);
+      function generateFeatureWeightListView(feature: string): JQuery<HTMLElement> {
+        if (feature !== undefined && rules[feature] !== undefined) {
+          const featureId = rules[feature].weightKey;
+          const featureName = rules[feature].name;
+          const featureComment = findComment(feature);
+          let result = $("<li />");
+          result.attr("title", featureComment);
+          if(featureId === undefined) {
+            result.append(`<span class="tf-nc">${featureName} </span>`)
+          } else {
+            result.append(`<span class="tf-nc"><label for="${featureId}"> ${featureName} </label> <input id="${featureId}" type="text" name="${featureId}" /></span>`)
+          }
+          if(rules[feature].keys !== undefined || rules[feature].children !== undefined) {
+            let chidrenList = $(`<ul></ul>`);
+            if (rules[feature].children !== undefined) {
+              rules[feature].children.forEach(child => {
+                chidrenList.append(generateFeatureWeightListView(child))
+              });
+            }
+            if (rules[feature].keys !== undefined) {
+              rules[feature].keys.forEach(child => {
+                chidrenList.append(generateFeatureWeightListView(child))
+              });
+            }
+            result.append(chidrenList);
+          }
+          return result;
+        } else {
+          console.log(rules)
+          throw new Error(`Feature ${feature} not found in rules`);
+        }
+      }
+
 
       // Connecting the form to the evaluation display
       // init with current profile

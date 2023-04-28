@@ -18,7 +18,7 @@
             ]
         },
         "Creation": {
-            "key": "collectionW",
+            "key": "creationW",
             "children": [
                 {
                     "name": "Creation Who",
@@ -85,7 +85,7 @@
             ]
         },
         "Creation When": {
-            "key": "collectionWhenW",
+            "key": "creationWhenW",
             "keys": [
                 {
                     "name": "Creation date",
@@ -94,7 +94,7 @@
             ]
         },
         "Creation Who": {
-            "key": "collectionWhoW",
+            "key": "creationWhoW",
             "keys": [
                 {
                     "name": "Aggregated creator contributor",
@@ -103,7 +103,7 @@
             ]
         },
         "Creation How": {
-            "key": "collectionHowW",
+            "key": "creationHowW",
             "keys": [
                 {
                     "name": "Creation methodology",
@@ -112,7 +112,7 @@
             ]
         },
         "Creation Where": {
-            "key": "collectionWhereW",
+            "key": "creationWhereW",
             "keys": [
                 {
                     "name": "Creation source",
@@ -289,7 +289,7 @@
             ]
         },
         "Creation": {
-            "key": "collectionW",
+            "key": "creationW",
             "children": [
                 {
                     "name": "Creation Who",
@@ -356,7 +356,7 @@
             ]
         },
         "Creation When": {
-            "key": "collectionWhenW",
+            "key": "creationWhenW",
             "keys": [
                 {
                     "name": "Creation date",
@@ -365,7 +365,7 @@
             ]
         },
         "Creation Who": {
-            "key": "collectionWhoW",
+            "key": "creationWhoW",
             "keys": [
                 {
                     "name": "Aggregated creator contributor",
@@ -374,7 +374,7 @@
             ]
         },
         "Creation How": {
-            "key": "collectionHowW",
+            "key": "creationHowW",
             "keys": [
                 {
                     "name": "Creation methodology",
@@ -383,7 +383,7 @@
             ]
         },
         "Creation Where": {
-            "key": "collectionWhereW",
+            "key": "creationWhereW",
             "keys": [
                 {
                     "name": "Creation source",
@@ -560,7 +560,7 @@
             ]
         },
         "Creation": {
-            "key": "collectionW",
+            "key": "creationW",
             "children": [
                 {
                     "name": "Creation Who",
@@ -627,7 +627,7 @@
             ]
         },
         "Creation When": {
-            "key": "collectionWhenW",
+            "key": "creationWhenW",
             "keys": [
                 {
                     "name": "Creation date",
@@ -636,7 +636,7 @@
             ]
         },
         "Creation Who": {
-            "key": "collectionWhoW",
+            "key": "creationWhoW",
             "keys": [
                 {
                     "name": "Aggregated creator contributor",
@@ -645,7 +645,7 @@
             ]
         },
         "Creation How": {
-            "key": "collectionHowW",
+            "key": "creationHowW",
             "keys": [
                 {
                     "name": "Creation methodology",
@@ -654,7 +654,7 @@
             ]
         },
         "Creation Where": {
-            "key": "collectionWhereW",
+            "key": "creationWhereW",
             "keys": [
                 {
                     "name": "Creation source",
@@ -831,7 +831,7 @@
             ]
         },
         "Creation": {
-            "key": "collectionW",
+            "key": "creationW",
             "children": [
                 {
                     "name": "Creation Who",
@@ -898,7 +898,7 @@
             ]
         },
         "Creation When": {
-            "key": "collectionWhenW",
+            "key": "creationWhenW",
             "keys": [
                 {
                     "name": "Creation date",
@@ -907,7 +907,7 @@
             ]
         },
         "Creation Who": {
-            "key": "collectionWhoW",
+            "key": "creationWhoW",
             "keys": [
                 {
                     "name": "Aggregated creator contributor",
@@ -916,7 +916,7 @@
             ]
         },
         "Creation How": {
-            "key": "collectionHowW",
+            "key": "creationHowW",
             "keys": [
                 {
                     "name": "Creation methodology",
@@ -925,7 +925,7 @@
             ]
         },
         "Creation Where": {
-            "key": "collectionWhereW",
+            "key": "creationWhereW",
             "keys": [
                 {
                     "name": "Creation source",
