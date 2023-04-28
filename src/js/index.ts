@@ -10,39 +10,39 @@ const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountab
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
 const rawResultTableId = "#rawResults";
 const evalResultTableId = "#evalResults";
-const columns = [
-  "Endpoint",
-  "Dataset",
-  "Creation date",
-  "Creation location",
-  "Creation methodology",
-  "Creation source",
-  "Aggregated creator contributor",
-  "Maintenance frequency",
-  "Maintenance location",
-  "Maintenance methodology",
-  "Modification date",
-  "Aggregated Maintenance contributor",
-  "Aggregated Usage access",
-  "Usage license",
-  "Usage requirements",
-  "Usage reuse",
-  "Usage concepts covered",
-  "Usage dataset description",
-  "Usage dataset entities",
-  "Usage dataset quality",
-  "Usage RDF serialization",
-  "Usage dataset triples",
-  "Usage End availability",
-  "Usage End validity",
-  "Usage start availability",
-  "Usage access address",
-  "Usage location",
-  "Usage dataset webpage",
-  "Usage audience",
-  "Usage Dataset publisher",
-  "Usage rights"
-];
+// const columns = [
+//   "Endpoint",
+//   "Dataset",
+//   "Creation date",
+//   "Creation location",
+//   "Creation methodology",
+//   "Creation source",
+//   "Aggregated creator contributor",
+//   "Maintenance frequency",
+//   "Maintenance location",
+//   "Maintenance methodology",
+//   "Modification date",
+//   "Aggregated Maintenance contributor",
+//   "Aggregated Usage access",
+//   "Usage license",
+//   "Usage requirements",
+//   "Usage reuse",
+//   "Usage concepts covered",
+//   "Usage dataset description",
+//   "Usage dataset entities",
+//   "Usage dataset quality",
+//   "Usage RDF serialization",
+//   "Usage dataset triples",
+//   "Usage End availability",
+//   "Usage End validity",
+//   "Usage start availability",
+//   "Usage access address",
+//   "Usage location",
+//   "Usage dataset webpage",
+//   "Usage audience",
+//   "Usage Dataset publisher",
+//   "Usage rights"
+// ];
 const measures = [
   "Accountability",
   "Creation",
@@ -58,13 +58,17 @@ $(() => {
       delimiter: ',',
       skip_empty_lines: true,
       columns: true
-    }).filter(dataRow => dataRow.Endpoint !== "");
+    });
     Utils.xhrGetPromise(commentFilename).then((csvCommentContent) => {
       const commentData: any[] = parse(csvCommentContent, {
         delimiter: ';',
         skip_empty_lines: true,
         columns: true
       });
+      const columns = Object.keys(data[0]);
+      columns.forEach(columnName => {
+        $("#rawResultHearderRow").append(`<th scope="col">${columnName}</th>`);
+      })
 
       let currentProfile = profiles[0];
       $("#standardProfileButton").on("click", () => {
