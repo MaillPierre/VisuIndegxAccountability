@@ -21,26 +21,6 @@
     <script type="module" src="./js/index.ts"></script>
 
     <style>
-        .parent {
-            display: grid;
-            grid-template-columns: 120px 50px 120px 50px 120px 50px;
-            grid-template-rows: repeat(6, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 5px;
-            justify-content: center;
-            justify-self: center;
-        }
-
-        .parentAllWeights {
-            display: grid;
-            grid-template-columns: 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px;
-            grid-template-rows: repeat(3, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 5px;
-            justify-content: center;
-            justify-self: center;
-        }
-
         label {
             padding: 0;
             margin: 0;
@@ -52,6 +32,7 @@
         }
 
         input {
+            text-align: center;
             padding: 0;
             margin: 0;
             outline: none;
@@ -62,8 +43,6 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             width: 30px;
-            padding: 5px;
-            margin-right: 5px;
         }
 
         .weightQuestionType {
