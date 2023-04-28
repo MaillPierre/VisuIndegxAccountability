@@ -147,7 +147,6 @@ $(() => {
               // We multiply the result by its weight for the computation of the feature score
               const childScore = rawChildScore * childWeight;
               // We add the weight and the score to the arrays for the computation of the feature score
-              result.set(child, childScore);
               weights.push(childWeight);
               featureScores.push(childScore);
             });
@@ -168,7 +167,6 @@ $(() => {
                 // We multiply the value by its weight for the computation of the feature score
                 leafValue = rawLeafValue * leafWeight;
                 // We add the weight and the value to the arrays for the computation of the feature score
-                result.set(key, leafValue);
                 weights.push(leafWeight);
                 featureScores.push(leafValue);
               });
@@ -206,7 +204,7 @@ $(() => {
                 const childKey = rules[child.name].weightKey;
                 $(`#${childKey}`).val(child.weight);
               } else {
-                console.log(`No weight ${child.name} found in profile`)
+                console.error(`No weight ${child.name} found in profile`)
               }
             });
           }
@@ -250,7 +248,7 @@ $(() => {
           }
           return result;
         } else {
-          console.log(rules)
+          console.error(rules)
           throw new Error(`Feature ${feature} not found in rules`);
         }
       }
