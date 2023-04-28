@@ -1,10 +1,11 @@
 import $ from 'jquery';
 import { parse } from 'csv-parse/lib/sync';
-import 'datatables.net-bs';
 import * as Utils from './Utils';
 import * as rules from '../computationStructure.json'
 import * as profiles from '../profiles.json'
 import * as echarts from 'echarts';
+import { Grid } from "gridjs";
+import "gridjs/dist/theme/mermaid.css";
 
 const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/results/Measures-24-04-2023.csv";
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
@@ -32,11 +33,20 @@ $(() => {
         skip_empty_lines: true,
         columns: true
       });
-      const columns = Object.keys(data[0]);
-      columns.forEach(columnName => {
-        $("#rawResultHearderRow").append(`<th scope="col">${columnName}</th>`);
-      })
 
+      // Generate the data table options from a parsed CSV
+      function dataToGridJSConfig(evalData) {
+        const result = {
+          columns: evalData[0] !== undefined ? Object.keys(evalData[0]).map(columnName => { return { id: columnName, name: columnName } }) : [],
+          data: evalData,
+          search: true,
+          sort: true,
+          pagination: true
+        }
+        return result;
+      }
+
+      // Generates the profuile buttons, TODO: replace with menu generated from profiles.json
       let currentProfile = profiles[0];
       $("#standardProfileButton").on("click", () => {
         if (profiles.find(profile => profile.name === "Standard") !== undefined) {
@@ -61,10 +71,8 @@ $(() => {
       });
 
       // Generate the raw datatable
-      let rawDataTable = $(rawResultTableId).DataTable({
-        data: data,
-        columns: columns.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } })
-      });
+      $("#rawResultsWrapper").empty();
+      let rawDataTable = new Grid(dataToGridJSConfig(data)).render(document.getElementById("rawResultsWrapper"));
 
       function findComment(measureName: string): string {
         let resultFind = commentData.filter((commentRow) => commentRow.Measure === measureName)[0];
@@ -87,11 +95,9 @@ $(() => {
         return evalData;
       };
 
-      // Generate the evaluated datatable
-      let evalDataTable = $(evalResultTableId).DataTable({
-        data: generateEvalData(data),
-        columns: [{ "data": "Endpoint" }, { "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } }))
-      });
+      // Generate the evaluation table
+      $("#evalResultsWrapper").empty();
+      let evalDataTable = new Grid(dataToGridJSConfig(generateEvalData(data))).render(document.getElementById("evalResultsWrapper"));
 
       // Generate the evaluation visualization
       let chartDom = document.getElementById('evalVisu');
@@ -119,7 +125,7 @@ $(() => {
             })
           }
         });
-        return  {
+        return {
           title: {
             top: 'top',
             left: 'center',
@@ -127,18 +133,18 @@ $(() => {
             text: 'Evaluation of the accountability of the datasets',
           },
           parallelAxis: [
-            { 
-              dim: 0, 
+            {
+              dim: 0,
               name: 'Creation',
               max: 1
             },
-            { 
-              dim: 1, 
+            {
+              dim: 1,
               name: 'Maintenance',
               max: 1
             },
-            { 
-              dim: 2, 
+            {
+              dim: 2,
               name: 'Usage',
               max: 1
             },
@@ -146,9 +152,9 @@ $(() => {
           tooltip: {
             showDelay: 0,
             formatter: function (params) {
-                return `${params.seriesName} <br/> ${params.value[3]} <br/> Creation: ${params.value[0]} <br/> Maintenance: ${params.value[1]} <br/> Usage: ${params.value[2]}`;
+              return `${params.seriesName} <br/> ${params.value[3]} <br/> Creation: ${params.value[0]} <br/> Maintenance: ${params.value[1]} <br/> Usage: ${params.value[2]}`;
             },
-        },
+          },
           series: chartSeries
         };
       }
@@ -217,11 +223,16 @@ $(() => {
       }
 
       function refreshEvalData() {
-        evalDataTable.clear()
-        evalDataTable.rows.add(generateEvalData(data))
-        evalDataTable.draw()
+        try {
+          evalDataTable.updateConfig({
+            data: generateEvalData(data).map(dataRow => dataRow !== undefined ? Object.keys(dataRow).map(key => dataRow[key]) : []),
+          }).forceRender();
+        } catch (e) {
+          console.error(e);
+        }
         myChart.setOption(generateParallelLinesOptions(), true);
       }
+      refreshEvalData();
 
       function refreshWeights() {
         Object.keys(currentProfile).forEach(feature => {
@@ -244,6 +255,7 @@ $(() => {
         });
       }
 
+      // Generate the weight form tree view
       let creationList = $("<ul></ul>");
       creationList.append(generateFeatureWeightListView("Creation"));
       $("#creationListRow").append(creationList);
