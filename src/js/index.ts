@@ -125,8 +125,25 @@ $(() => {
 
       // Generate the evaluation visualization
       var chartDom = document.getElementById('evalVisu');
-      chartDom.style.height = "500px";
+      chartDom.style.height = "800px";
       chartDom.style.width = $("#mainContentCol").width() + "px";
+      // Generating the chart series
+      let endpointList = [...new Set(evalData.map(dataRow => dataRow.Endpoint))];
+      let chartSeries = endpointList.map(endpoint => {
+        return {
+          name: endpoint,
+          type: 'parallel',
+          lineStyle: {
+            width: 4
+          },
+          tooltip: {
+            show: true
+          },
+          data: evalData.filter(dataRow => dataRow.Endpoint === endpoint).map(dataRow => {
+            return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage]
+          })
+        }
+      });
       var myChart = echarts.init(chartDom);
       var option;
       option = {
@@ -137,34 +154,23 @@ $(() => {
           text: 'Evaluation of the accountability of the datasets',
         },
         parallelAxis: [
-          { dim: 1, name: 'Creation' },
-          { dim: 2, name: 'Maintenance' },
-          { dim: 3, name: 'Usage' },
+          { 
+            dim: 1, 
+            name: 'Creation',
+            max: 1
+          },
+          { 
+            dim: 2, 
+            name: 'Maintenance',
+            max: 1
+          },
+          { 
+            dim: 3, 
+            name: 'Usage',
+            max: 1
+          },
         ],
-        series: [
-          {
-            type: 'parallel',
-            lineStyle: {
-              width: 4
-            },
-            axisPointer: {
-              type: 'line',
-              label: {
-                show: true,
-                formatter: function (params) {
-                  return params.value;
-                }
-              }
-            },
-            tooltip: {
-              show: true,
-              trigger: 'item'
-            },
-            data: evalData.map(dataRow => {
-              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage];
-            })
-          }
-        ]
+        series: chartSeries
       };
       option && myChart.setOption(option);
 
