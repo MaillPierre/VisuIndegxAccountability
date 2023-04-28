@@ -21,26 +21,6 @@
     <script type="module" src="./js/index.ts"></script>
 
     <style>
-        .parent {
-            display: grid;
-            grid-template-columns: 120px 50px 120px 50px 120px 50px;
-            grid-template-rows: repeat(6, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 5px;
-            justify-content: center;
-            justify-self: center;
-        }
-
-        .parentAllWeights {
-            display: grid;
-            grid-template-columns: 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px 200px 40px;
-            grid-template-rows: repeat(3, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 5px;
-            justify-content: center;
-            justify-self: center;
-        }
-
         label {
             padding: 0;
             margin: 0;
@@ -52,6 +32,7 @@
         }
 
         input {
+            text-align: center;
             padding: 0;
             margin: 0;
             outline: none;
@@ -62,8 +43,6 @@
             border: 1px solid #ccc;
             border-radius: 3px;
             width: 30px;
-            padding: 5px;
-            margin-right: 5px;
         }
 
         .weightQuestionType {
@@ -84,7 +63,7 @@
             justify-self: left;
         }
     </style>
-    <title>Visualisation of the accountability of RDF Datasets
+    <title>Visualization of the accountability of RDF Datasets
     </title>
 </head>
 
@@ -95,27 +74,35 @@
         <div class='justify-content-center container-xxl'>
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h1 class="text-center">Visualisation of the accountability of RDF Datasets</h1>
+                    <h1 class="text-center">Visualization of the accountability of RDF Datasets</h1>
                 </div>
             </div>
             <div class='row justify-content-center my-5' id='rootContainer'>
-                <div class='col-1'>
-                </div>
                 <div class='col-10 justify-content-center' id='mainContentCol'>
-                    <div class="row">
-                        <div class="col-6">
-                            <a class="btn btn-primary" id="standardProfileButton" href="#standardProfile">Standard
-                                Profile</a>
-                            <a class="btn btn-primary" id="trustProfileButton" href="#trustProfile">Trust Profile</a>
-                            <a class="btn btn-primary" id="mostCommonProfileButton" href="#mostCommonProfile">Most
-                                Common Features Profile</a>
-                        </div>
+                    <div class="row justify-content-center">
+                        <a class="btn btn-primary" id="standardProfileButton" href="#standardProfile">Standard
+                            Profile</a>
+                        <a class="btn btn-primary" id="trustProfileButton" href="#trustProfile">Trust Profile</a>
+                        <a class="btn btn-primary" id="mostCommonProfileButton" href="#mostCommonProfile">Most
+                            Common Features Profile</a>
+                    </div>
 
+                    <div class="row">
+                        <div id="evalVisu">
+
+                        </div>
+                    </div>
                     <div id="listWeightRow" class="row">
                         <div id="listWeightCol" class="col-12">
-                            <div class="row tf-tree" id="creationListRow"></div>
-                            <div class="row tf-tree" id="maintenanceListRow"></div>
-                            <div class="row tf-tree" id="usageListRow"></div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row tf-tree justify-content-center" id="creationListRow"></div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row tf-tree justify-content-center" id="maintenanceListRow"></div>
+                                </div>
+                            </div>
+                            <div class="row tf-tree justify-content-center" id="usageListRow"></div>
 
                         </div>
                     </div>
@@ -140,43 +127,12 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
+
+                    <div class="row" style="width: 100%; white-space: nowrap;">
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-sm" id="rawResults">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">Endpoint</th>
-                                        <th scope="col">Dataset</th>
-                                        <th scope="col">Creation date</th>
-                                        <th scope="col">Creation location</th>
-                                        <th scope="col">Creation methodology</th>
-                                        <th scope="col">Creation source</th>
-                                        <th scope="col">Aggregated creator contributor</th>
-                                        <th scope="col">Maintenance frequency</th>
-                                        <th scope="col">Maintenance location</th>
-                                        <th scope="col">Maintenance methodology</th>
-                                        <th scope="col">Modification date</th>
-                                        <th scope="col">Aggregated Maintenance contributor</th>
-                                        <th scope="col">Aggregated Usage access</th>
-                                        <th scope="col">Usage license</th>
-                                        <th scope="col">Usage requirements</th>
-                                        <th scope="col">Usage reuse</th>
-                                        <th scope="col">Usage concepts covered</th>
-                                        <th scope="col">Usage dataset description</th>
-                                        <th scope="col">Usage dataset entities</th>
-                                        <th scope="col">Usage examples</th>
-                                        <th scope="col">Usage dataset quality</th>
-                                        <th scope="col">Usage RDF serialization</th>
-                                        <th scope="col">Usage dataset triples</th>
-                                        <th scope="col">Usage End availability</th>
-                                        <th scope="col">Usage End validity</th>
-                                        <th scope="col">Usage start availability</th>
-                                        <th scope="col">Usage access address</th>
-                                        <th scope="col">Usage location</th>
-                                        <th scope="col">Usage dataset webpage</th>
-                                        <th scope="col">Usage audience</th>
-                                        <th scope="col">Usage Dataset publisher</th>
-                                        <th scope="col">Usage rights</th>
+                                    <tr id="rawResultHearderRow">
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -185,8 +141,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class='col-1'>
                 </div>
             </div>
         </div>

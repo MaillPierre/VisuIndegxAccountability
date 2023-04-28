@@ -4,44 +4,12 @@ import 'datatables.net-bs';
 import * as Utils from './Utils';
 import * as rules from '../computationStructure.json'
 import * as profiles from '../profiles.json'
+import * as echarts from 'echarts';
 
 const resultFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/results/Measures-24-04-2023.csv";
 const commentFilename = "https://raw.githubusercontent.com/Jendersen/KG_accountability/towardsIndeGx/information_need/metric_question_remarks.csv";
 const rawResultTableId = "#rawResults";
 const evalResultTableId = "#evalResults";
-const columns = [
-  "Endpoint",
-  "Dataset",
-  "Creation date",
-  "Creation location",
-  "Creation methodology",
-  "Creation source",
-  "Aggregated creator contributor",
-  "Maintenance frequency",
-  "Maintenance location",
-  "Maintenance methodology",
-  "Modification date",
-  "Aggregated Maintenance contributor",
-  "Aggregated Usage access",
-  "Usage license",
-  "Usage requirements",
-  "Usage reuse",
-  "Usage concepts covered",
-  "Usage dataset description",
-  "Usage dataset entities",
-  "Usage dataset quality",
-  "Usage RDF serialization",
-  "Usage dataset triples",
-  "Usage End availability",
-  "Usage End validity",
-  "Usage start availability",
-  "Usage access address",
-  "Usage location",
-  "Usage dataset webpage",
-  "Usage audience",
-  "Usage Dataset publisher",
-  "Usage rights"
-];
 const measures = [
   "Accountability",
   "Creation",
@@ -57,13 +25,17 @@ $(() => {
       delimiter: ',',
       skip_empty_lines: true,
       columns: true
-    }).filter(dataRow => dataRow.Endpoint !== "");
+    });
     Utils.xhrGetPromise(commentFilename).then((csvCommentContent) => {
       const commentData: any[] = parse(csvCommentContent, {
         delimiter: ';',
         skip_empty_lines: true,
         columns: true
       });
+      const columns = Object.keys(data[0]);
+      columns.forEach(columnName => {
+        $("#rawResultHearderRow").append(`<th scope="col">${columnName}</th>`);
+      })
 
       let currentProfile = profiles[0];
       $("#standardProfileButton").on("click", () => {
@@ -120,6 +92,66 @@ $(() => {
         data: generateEvalData(data),
         columns: [{ "data": "Endpoint" }, { "data": "Dataset" }].concat(measures.map(columnName => { return { "data": columnName, "ariaTitle": findComment(columnName) } }))
       });
+
+      // Generate the evaluation visualization
+      let chartDom = document.getElementById('evalVisu');
+      chartDom.style.height = "800px";
+      chartDom.style.width = $("#mainContentCol").width() + "px";
+      let myChart = echarts.init(chartDom);
+      let option = generateParallelLinesOptions();
+      myChart.setOption(option);
+      // Generating the chart series
+      function generateParallelLinesOptions() {
+        let evalData = generateEvalData(data);
+        let endpointList = [...new Set(evalData.map(dataRow => dataRow.Endpoint))];
+        let chartSeries = endpointList.map(endpoint => {
+          return {
+            name: endpoint,
+            type: 'parallel',
+            lineStyle: {
+              width: 4
+            },
+            tooltip: {
+              show: true
+            },
+            data: evalData.filter(dataRow => dataRow.Endpoint === endpoint).map(dataRow => {
+              return [dataRow.Creation, dataRow.Maintenance, dataRow.Usage, dataRow.Dataset]
+            })
+          }
+        });
+        return  {
+          title: {
+            top: 'top',
+            left: 'center',
+            show: true,
+            text: 'Evaluation of the accountability of the datasets',
+          },
+          parallelAxis: [
+            { 
+              dim: 0, 
+              name: 'Creation',
+              max: 1
+            },
+            { 
+              dim: 1, 
+              name: 'Maintenance',
+              max: 1
+            },
+            { 
+              dim: 2, 
+              name: 'Usage',
+              max: 1
+            },
+          ],
+          tooltip: {
+            showDelay: 0,
+            formatter: function (params) {
+                return `${params.seriesName} <br/> ${params.value[3]} <br/> Creation: ${params.value[0]} <br/> Maintenance: ${params.value[1]} <br/> Usage: ${params.value[2]}`;
+            },
+        },
+          series: chartSeries
+        };
+      }
 
       // Generate the evaluation of a feature from the data, the computation structure and the current profile
       // Returns a map of the feature and its children associated with their score
@@ -188,6 +220,7 @@ $(() => {
         evalDataTable.clear()
         evalDataTable.rows.add(generateEvalData(data))
         evalDataTable.draw()
+        myChart.setOption(generateParallelLinesOptions(), true);
       }
 
       function refreshWeights() {
@@ -227,12 +260,12 @@ $(() => {
           const featureComment = findComment(feature);
           let result = $("<li />");
           result.attr("title", featureComment);
-          if(featureId === undefined) {
+          if (featureId === undefined) {
             result.append(`<span class="tf-nc">${featureName} </span>`)
           } else {
             result.append(`<span class="tf-nc"><label for="${featureId}"> ${featureName} </label> <input id="${featureId}" type="text" name="${featureId}" /></span>`)
           }
-          if(rules[feature].keys !== undefined || rules[feature].children !== undefined) {
+          if (rules[feature].keys !== undefined || rules[feature].children !== undefined) {
             let chidrenList = $(`<ul></ul>`);
             if (rules[feature].children !== undefined) {
               rules[feature].children.forEach(child => {
