@@ -929,7 +929,7 @@
             "keys": [
                 {
                     "name": "Creation source",
-                    "weight": 1
+                    "weight": 2
                 },
                 {
                     "name": "Creation location",
@@ -946,7 +946,7 @@
                 },
                 {
                     "name": "Modification date",
-                    "weight": 1
+                    "weight": 4
                 }
             ]
         },
@@ -982,19 +982,19 @@
             "keys": [
                 {
                     "name": "Usage license",
-                    "weight": 1
+                    "weight": 4
                 },
                 {
                     "name": "Usage requirements",
-                    "weight": 1
+                    "weight": 0.5
                 },
                 {
                     "name": "Usage reuse",
-                    "weight": 1
+                    "weight": 0.5
                 },
                 {
                     "name": "Aggregated Usage access",
-                    "weight": 1
+                    "weight": 4
                 }
             ]
         },
@@ -1007,27 +1007,27 @@
                 },
                 {
                     "name": "Usage dataset description",
-                    "weight": 1
+                    "weight": 4
                 },
                 {
                     "name": "Usage dataset entities",
-                    "weight": 1
+                    "weight": 3
                 },
                 {
                     "name": "Usage examples",
-                    "weight": 1
+                    "weight": 3
                 },
                 {
                     "name": "Usage dataset quality",
-                    "weight": 1
+                    "weight": 0.5
                 },
                 {
                     "name": "Usage RDF serialization",
-                    "weight": 1
+                    "weight": 3
                 },
                 {
                     "name": "Usage dataset triples",
-                    "weight": 1
+                    "weight": 3
                 }
             ]
         },
@@ -1044,7 +1044,7 @@
                 },
                 {
                     "name": "Usage start availability",
-                    "weight": 1
+                    "weight": 6
                 }
             ]
         },
@@ -1053,11 +1053,11 @@
             "keys": [
                 {
                     "name": "Usage location",
-                    "weight": 1
+                    "weight": 4
                 },
                 {
                     "name": "Usage access address",
-                    "weight": 1
+                    "weight": 4
                 },
                 {
                     "name": "Usage dataset webpage",
@@ -1070,7 +1070,7 @@
             "keys": [
                 {
                     "name": "Usage audience",
-                    "weight": 1
+                    "weight": 0.5
                 },
                 {
                     "name": "Usage Dataset publisher",
@@ -1078,7 +1078,7 @@
                 },
                 {
                     "name": "Usage rights",
-                    "weight": 1
+                    "weight": 4
                 }
             ]
         }
